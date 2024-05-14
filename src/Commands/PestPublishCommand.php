@@ -36,8 +36,7 @@ final class PestPublishCommand extends Command
     public function handle(): void
     {
         $pestStubsPath = implode(DIRECTORY_SEPARATOR, [
-            $this->laravel->basePath('vendor'),
-            'pestphp',
+            dirname(__DIR__, 3),
             'pest',
             'stubs',
         ]);

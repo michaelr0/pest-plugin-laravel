@@ -11,8 +11,7 @@ trait PublishedStubs
     protected function resolveStubPath($stub): string
     {
         $pestStub = implode(DIRECTORY_SEPARATOR, [
-            $this->laravel->basePath('vendor'),
-            'pestphp',
+            dirname(__DIR__, 3),
             'pest',
             'stubs',
             $stub,
