@@ -7,6 +7,7 @@ namespace Pest\Laravel\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Console\PromptsForMissingInput;
 use Illuminate\Support\Facades\File;
+use Pest\Laravel\Commands\Traits\PublishedStubs;
 use Pest\Support\Str;
 use Pest\TestSuite;
 use Symfony\Component\Console\Input\InputInterface;
@@ -20,6 +21,8 @@ use function Pest\testDirectory;
  */
 final class PestTestCommand extends Command implements PromptsForMissingInput
 {
+    use PublishedStubs;
+
     /**
      * The console command name.
      *
@@ -70,12 +73,7 @@ final class PestTestCommand extends Command implements PromptsForMissingInput
             return 1;
         }
 
-        $contents = File::get(implode(DIRECTORY_SEPARATOR, [
-            dirname(__DIR__, 3),
-            'pest',
-            'stubs',
-            sprintf('%s.php', $type),
-        ]));
+        $contents = File::get($this->resolveStubPath(sprintf('%s.php', $type)));
 
         $name = mb_strtolower($name);
         $name = Str::endsWith($name, 'test') ? mb_substr($name, 0, -4) : $name;

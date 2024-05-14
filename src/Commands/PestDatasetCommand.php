@@ -7,6 +7,7 @@ namespace Pest\Laravel\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Pest\Laravel\Commands\Traits\PublishedStubs;
 use Pest\TestSuite;
 
 use function Pest\testDirectory;
@@ -16,6 +17,8 @@ use function Pest\testDirectory;
  */
 final class PestDatasetCommand extends Command
 {
+    use PublishedStubs;
+
     /**
      * The Console Command name.
      *
@@ -58,12 +61,7 @@ final class PestDatasetCommand extends Command
             File::makeDirectory(dirname($relativePath));
         }
 
-        $contents = File::get(implode(DIRECTORY_SEPARATOR, [
-            dirname(__DIR__, 3),
-            'pest',
-            'stubs',
-            'Dataset.php',
-        ]));
+        $contents = File::get($this->resolveStubPath('Dataset.php'));
 
         $name = mb_strtolower($name);
         $contents = str_replace('{dataset_name}', $name, $contents);

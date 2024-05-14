@@ -8,6 +8,7 @@ use Illuminate\Support\ServiceProvider;
 use Laravel\Dusk\Console\DuskCommand;
 use Pest\Laravel\Commands\PestDatasetCommand;
 use Pest\Laravel\Commands\PestDuskCommand;
+use Pest\Laravel\Commands\PestPublishCommand;
 use Pest\Laravel\Commands\PestTestCommand;
 
 final class PestServiceProvider extends ServiceProvider
@@ -21,6 +22,7 @@ final class PestServiceProvider extends ServiceProvider
             $this->commands([
                 PestTestCommand::class,
                 PestDatasetCommand::class,
+                PestPublishCommand::class,
             ]);
 
             if (class_exists(DuskCommand::class)) {
